@@ -122,6 +122,9 @@ module.exports = class Master {
             // Update headers
             instance.updateRequestHeaders(req.headers);
 
+            // Remove Master auth credentials, if present, as they would otherwise leak to external hosts
+            delete req.headers['proxy-authorization'];
+
             // Make request
             const proxyOpts = _.merge(createProxyOpts(req.url), {
                 method: req.method,
@@ -262,6 +265,11 @@ module.exports = class Master {
                 agent: self._agent, // Don't use the proxy agent
                 headers: {},
             };
+
+            if (proxyParameters.username && proxyParameters.password) {
+                const usernamePasswordB64 = new Buffer(`${proxyParameters.username}:${proxyParameters.password}`).toString('base64');
+                proxyOpts.headers['proxy-authorization'] = `Basic ${usernamePasswordB64}`;
+            }
 
             const proxy_req = http.request(proxyOpts);
 
