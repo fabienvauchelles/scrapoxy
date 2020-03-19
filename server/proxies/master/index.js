@@ -130,7 +130,13 @@ module.exports = class Master {
                 proxy: instance.proxyParameters,
             });
 
-            const proxy_req = http.request(proxyOpts);
+            let proxy_req;
+            try {
+                proxy_req = http.request(proxyOpts);
+            } catch (error) {
+                return writeEndRequest(res, 500, `[Master] Error: Cannot create request (${error})`);
+            }
+
 
             proxy_req.on('error', (err) => {
                 winston.error('[Master] Error: request error from target (%s %s on instance %s):', req.method, req.url, instance.toString(), err);
