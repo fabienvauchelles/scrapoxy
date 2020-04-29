@@ -5,7 +5,7 @@ Tutorial: AWS / EC2 - Copy an AMI from a region to another
 
 AMI (and security groups) are restricted to a region.
 
-A AMI in eu-west-1 is not available in eu-central-1.
+An AMI in eu-west-1 is not available in eu-central-1.
 
 .. warning::
     You must create an AMI **by region**.
@@ -33,7 +33,8 @@ Step 4: Find the public AMI
 ===========================
  
 1. Click on *AMIs*
-2. Search *ami-c74d0db4*
+2. Select the drop-down and choose 'Public images' (Not pictured below as Scrapoxy is the owner/creator of the image)
+3. Search *ami-c74d0db4*
 
 .. image:: step_1.jpg
 
